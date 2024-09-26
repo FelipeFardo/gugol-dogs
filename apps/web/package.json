@@ -49,7 +49,6 @@
     "@gugol-dogs/eslint-config": "workspace:*",
     "@gugol-dogs/prettier": "workspace:*",
     "@gugol-dogs/tsconfig": "workspace:*",
-    "@tailwindcss/typography": "github:tailwindcss/typography",
     "tailwind-scrollbar": "^3.1.0",
     "@types/node": "^20",
     "@types/react": "^18",

@@ -7,7 +7,7 @@
     "db:studio": "pnpm run env:load prisma studio",
     "db:seed": "tsx prisma/seed.ts",
     "env:load": "dotenv -e ../../.env --",
-    "build": "tsup",
+    "build": "tsup", 
     "start": "node dist/http/server.js"
   },
   "dependencies": {
