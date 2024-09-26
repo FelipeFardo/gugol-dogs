@@ -9,7 +9,7 @@
   ],
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.2.2",
-    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
     "@gugol-dogs/prettier": "workspace:*"
   },
   "prettier": "@gugol-dogs/prettier",
