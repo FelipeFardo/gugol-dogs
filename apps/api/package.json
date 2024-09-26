@@ -6,7 +6,9 @@
     "db:migrate": "pnpm run env:load prisma migrate dev",
     "db:studio": "pnpm run env:load prisma studio",
     "db:seed": "tsx prisma/seed.ts",
-    "env:load": "dotenv -e ../../.env --"
+    "env:load": "dotenv -e ../../.env --",
+    "build": "tsc",
+    "start": "node dist/http/server.js"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
@@ -14,15 +16,15 @@
     "@fastify/swagger": "^8.14.0",
     "@fastify/swagger-ui": "^3.0.0",
     "@fastify/websocket": "^10.0.1",
-    "@prisma/client": "^5.14.0",
     "@gugol-dogs/auth": "workspace:*",
     "@gugol-dogs/env": "workspace:*",
+    "@prisma/client": "^5.14.0",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
     "fastify": "^4.27.0",
     "fastify-plugin": "^4.5.1",
     "fastify-type-provider-zod": "^1.2.0",
-
+    "ws": "^8.18.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -34,9 +36,9 @@
     "@types/ws": "^8.5.12",
     "dotenv-cli": "^7.4.2",
     "prisma": "^5.14.0",
+    "tsup": "^8.3.0",
     "tsx": "^4.10.5"
   },
-
   "prettier": "@gugol-dogs/prettier",
   "eslintConfig": {
     "extends": [
