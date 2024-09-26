@@ -236,7 +236,7 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2(eslint@8.57.0)(typescript@5.4.5)
       eslint-plugin-simple-import-sort:
-        specifier: ^12.1.0
+        specifier: ^12.0.0
         version: 12.1.0(eslint@8.57.0)
 
   config/prettier:
@@ -245,7 +245,7 @@ importers:
         specifier: ^3.2.5
         version: 3.3.1
       prettier-plugin-tailwindcss:
-        specifier: ^0.5.14
+        specifier: ^0.5.13
         version: 0.5.14(prettier@3.3.1)
 
   config/typescript-config: {}
