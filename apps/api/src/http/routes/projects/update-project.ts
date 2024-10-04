@@ -23,7 +23,7 @@ export async function updateProject(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           body: z.object({
             name: z.string(),
-            description: z.string(),
+            content: z.string(),
           }),
           params: z.object({
             slug: z.string(),
@@ -61,7 +61,7 @@ export async function updateProject(app: FastifyInstance) {
           )
         }
 
-        const { name, description } = request.body
+        const { name, content } = request.body
 
         await prisma.project.update({
           where: {
@@ -69,7 +69,7 @@ export async function updateProject(app: FastifyInstance) {
           },
           data: {
             name,
-            description,
+            content,
           },
         })
 

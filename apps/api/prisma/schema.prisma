@@ -121,11 +121,10 @@ model Organization {
 }
 
 model Project {
-  id          String @id @default(uuid())
-  content     String @default("")
-  name        String
-  description String
-  slug        String @unique
+  id      String @id @default(uuid())
+  content String @default("")
+  name    String
+  slug    String @unique
 
   avatarUrl String?  @map("avatar_url")
   createdAt DateTime @default(now()) @map("created_at")
@@ -134,8 +133,25 @@ model Project {
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId String       @map("organization_id")
 
-  owner   User   @relation(fields: [ownerId], references: [id])
-  ownerId String @map("owner_id")
+  owner      User        @relation(fields: [ownerId], references: [id])
+  ownerId    String      @map("owner_id")
+  operations Operation[]
 
   @@map("projects")
+}
+
+enum OperationType {
+  insert
+  delete
+}
+
+model Operation {
+  id        String        @id @default(uuid())
+  index     Int
+  chars     String
+  projectId String
+  type      OperationType
+  project   Project       @relation(fields: [projectId], references: [id])
+
+  @@map("operations")
 }

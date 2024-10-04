@@ -9,7 +9,7 @@ import { createProject } from '@/http/create-project'
 
 const createProjectSchema = z.object({
   name: z.string().min(4, { message: 'Plase include at least 4 characteres.' }),
-  description: z.string(),
+  content: z.string(),
 })
 
 export async function createProjectAction(data: FormData) {
@@ -21,13 +21,13 @@ export async function createProjectAction(data: FormData) {
     return { success: false, message: null, errors }
   }
 
-  const { name, description } = result.data
+  const { name, content } = result.data
 
   try {
     await createProject({
       org: getCurrentOrg()!,
       name,
-      description,
+      content,
     })
     revalidateTag('projects')
   } catch (err) {

@@ -2,12 +2,21 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
+import { prisma } from '@/lib/prisma'
 import { extractToken } from '@/utils/extract-token-ws'
+import { applyOperation, Operation } from '@/utils/operation-transform'
 import {
   desconnectUserFromProject,
   updateProject,
   userConnect,
 } from '@/ws/project-connections'
+
+interface Message {
+  type: string
+  operation?: Operation
+  document?: string
+  history?: Operation[]
+}
 
 export async function editProject(app: FastifyInstance) {
   app
@@ -34,35 +43,46 @@ export async function editProject(app: FastifyInstance) {
 
         const { projectSlug } = request.params
         // Quando o usuário se connectar no websocket
-        userConnect({
+        await userConnect({
           connection,
           projectSlug,
           userId,
         })
 
+        // Evento quando o usuário enviar uma operação para editar o documento
         connection.on('message', async (message: string) => {
-          // Aqui dentro pode e deve ser feita toda lógica
-          // Quando o usuário mandar uma mensagem
-          // O websocket transmite as mensagem como string
-          // Cabe o backend transformar a mensagem em uma strutura de dados
-          // O Front manda uma mensagem, por exemplo:
-          // operation =  { type: 'insert', text: 'Hello world', pos: 3}
-          // ou
-          // operation = { type: 'delete', pos: 5, length: '4'}
-          // const message = JSON.stringfy(operation)
-          // Agora message é uma string
+          const data: Message = JSON.parse(message)
 
-          // No backend usamos o processo inverso:
-          // const operation JSON.parse(message)
-          // Podemos agora criar toda a lógica
-          // Por exemplo: if (operation.type == "insert") {console.log("O usuário digitou um texto")}
+          if (data.type === 'operation' && data.operation) {
+            const operation = data.operation
 
-          // Por enquanto está apenas editando o projeto para todos usuários
-          await updateProject({
-            connection,
-            projectSlug,
-            message,
-          })
+            // Aplicar operação localmente
+            const project = await prisma.project.findUnique({
+              where: { slug: projectSlug },
+            })
+
+            if (!project) return
+
+            // Aplica a operação e retorna o novo documento
+            const document = applyOperation(project.content, operation)
+
+            // Insere a operação no banco de dados
+            await prisma.operation.create({
+              data: {
+                chars: data.operation.chars,
+                index: data.operation.index,
+                type: data.operation.type,
+                projectId: project.id,
+              },
+            })
+
+            await updateProject({
+              connection,
+              projectSlug,
+              operation,
+              content: document,
+            })
+          }
         })
 
         // Quando o usuário se desconectar

@@ -47,6 +47,14 @@ export async function Tabs() {
             </NavLink>
           </Button>
         )}
+        <Button
+          asChild
+          variant="ghost"
+          size="sm"
+          className=" border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"
+        >
+          <NavLink href={`/org/${currentOrg}/playground`}>Playground</NavLink>
+        </Button>
       </nav>
     </div>
   )

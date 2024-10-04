@@ -22,7 +22,7 @@ export async function createProject(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           body: z.object({
             name: z.string(),
-            description: z.string(),
+            content: z.string(),
           }),
           params: z.object({
             slug: z.string(),
@@ -49,13 +49,13 @@ export async function createProject(app: FastifyInstance) {
           )
         }
 
-        const { description, name } = request.body
+        const { content, name } = request.body
 
         const project = await prisma.project.create({
           data: {
             name,
             slug: createSlug(name),
-            description,
+            content,
             organizationId: organization.id,
             ownerId: userId,
           },

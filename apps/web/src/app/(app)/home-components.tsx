@@ -12,17 +12,17 @@ import { Input } from '@/components/ui/input'
 interface FeatureCardProps {
   icon: React.ElementType
   title: string
-  description: string
+  content: string
 }
 
-function FeatureCard({ icon: Icon, title, description }: FeatureCardProps) {
+function FeatureCard({ icon: Icon, title, content }: FeatureCardProps) {
   return (
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
       <Card className="h-full border-none bg-white/5 backdrop-blur-lg">
         <CardContent className="flex h-full flex-col pt-6">
           <Icon className="mx-auto mb-4 h-16 w-16 text-white" />
           <h3 className="mb-2 text-2xl font-bold text-gray-300">{title}</h3>
-          <p className="flex-grow text-gray-400">{description}</p>
+          <p className="flex-grow text-gray-400">{content}</p>
         </CardContent>
       </Card>
     </motion.div>

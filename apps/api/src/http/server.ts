@@ -120,6 +120,11 @@ app.register(editProject)
 
 app.register(getUsersByConnectProject)
 
-app.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
-  console.log('HTTP server running!')
-})
+app
+  .listen({
+    port: env.PORT,
+    host: '0.0.0.0',
+  })
+  .then(() => {
+    console.log('HTTP server running!')
+  })

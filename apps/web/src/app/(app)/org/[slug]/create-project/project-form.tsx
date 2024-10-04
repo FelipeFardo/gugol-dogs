@@ -54,11 +54,11 @@ export function ProjectForm() {
         )}
       </div>
       <div className="space-y-1">
-        <Label htmlFor="description">Description</Label>
-        <Textarea name="description" id="description" />
-        {errors?.description && (
+        <Label htmlFor="content">Content</Label>
+        <Textarea name="content" id="content" />
+        {errors?.content && (
           <p className="text-xs font-medium text-red-500 dark:text-red-400">
-            {errors.description[0]}
+            {errors.content[0]}
           </p>
         )}
       </div>

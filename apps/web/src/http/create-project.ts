@@ -3,7 +3,7 @@ import { api } from './api-client'
 interface CreateProjectRequest {
   org: string
   name: string
-  description: string | null
+  content: string | null
 }
 
 type CreateProjectResponse = void
@@ -11,12 +11,12 @@ type CreateProjectResponse = void
 export async function createProject({
   org,
   name,
-  description,
+  content,
 }: CreateProjectRequest): Promise<CreateProjectResponse> {
   await api.post(`organizations/${org}/projects`, {
     json: {
       name,
-      description,
+      content,
     },
   })
 }
